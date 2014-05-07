@@ -1,3 +1,3 @@
-My modded version of CWM Recovery with full touch support. Use it with CM-10.1 building environment.
+Carliv Touch Recovery 2.3 sources for build 10.1 cm recovery.
 
-Enjoy!
+Modded by me.
