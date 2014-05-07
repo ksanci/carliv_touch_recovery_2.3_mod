@@ -52,6 +52,7 @@ char* MENU_ITEMS[] = { "Power Menu",
                        "Reboot Phone",
                        NULL };
 
+
 void device_ui_init(UIParameters* ui_parameters) {
 }
 

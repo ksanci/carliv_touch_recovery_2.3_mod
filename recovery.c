@@ -82,7 +82,9 @@ extern UIParameters ui_parameters;    // from ui.c
 
 const char *DEFAULT_PATH = "clockworkmod";
 
+//int EXTRA_SDCARD = NULL; //0 - sdcard, 1 - EMMC, 2 - EXTERNALSD
 int EXTRA_SDCARD = NULL;
+
 
 /*
  * The recovery tool communicates with the main system through /cache files.
@@ -716,7 +718,7 @@ void wipe_dalvik_cache(int confirm) {
 void wipe_all(int confirm) 
 {
     if (confirm) {
-        if (!confirm_selection("Confirm wipe of all including system?", "Yes - Wipe All"))
+        if (!confirm_selection("Wipe of all, including system?", "Yes - Wipe All"))
         {
 			return;
 		}
@@ -869,7 +871,7 @@ main(int argc, char **argv) {
     // Recovery needs to install world-readable files, so clear umask
     // set by init
     umask(0);
-
+    
     if (strcmp(basename(argv[0]), "recovery") != 0)
     {
         if (strstr(argv[0], "minizip") != NULL)
@@ -927,7 +929,9 @@ main(int argc, char **argv) {
     device_ui_init(&ui_parameters);
     ui_init();
     ui_print(EXPAND(RECOVERY_VERSION)"\n");
-//  ui_print("Compiled by ............\n");
+    ui_print("MTK6285 android_4x_wet_jb5\n");
+    ui_print("W450\n");
+    ui_print("Compiled by ksanci (v0.4)\n");
     
 #ifdef BOARD_RECOVERY_SWIPE
 #ifndef BOARD_TOUCH_RECOVERY

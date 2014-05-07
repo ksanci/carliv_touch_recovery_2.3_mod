@@ -56,6 +56,7 @@
 
 typedef struct {
     GGLSurface texture;
+    unsigned width;
     unsigned cwidth;
     unsigned cheight;
     unsigned ascent;
@@ -264,7 +265,7 @@ int gr_text(int x, int y, const char *s, int bold)
 
     while((off = *s++)) {
         off -= 32;
-        if (off < 96) {
+        if (off < font->width / font->cwidth) {
             gl->texCoord2i(gl, (off * font->cwidth) - x, 0 - y);
             gl->recti(gl, x, y, x + font->cwidth, y + font->cheight);
         }
@@ -365,6 +366,7 @@ static void gr_init_font(void)
         bits += (data & 0x7f);
     }
 
+    gr_font->width = font.width;
     gr_font->cwidth = font.cwidth;
     gr_font->cheight = font.cheight;
     gr_font->ascent = font.cheight - 2;

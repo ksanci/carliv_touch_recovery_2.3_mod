@@ -630,7 +630,7 @@ void show_nandroid_delete_menu(const char* path)
 
 int show_choose_delete_menu() 
 {
-    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "View and delete backups on /sdcard",
+    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "backups on /sdcard",
                                                 NULL,
                                                 NULL };
 
@@ -643,13 +643,13 @@ int show_choose_delete_menu()
                                NULL
     };
 
-    if(strcasecmp(EXTRA_SDCARD,"/emmc")) {
-        CHOOSE_DELETE_MENU_ITEMS[1]="View and delete backups on /emmc";
-    } else if(strcasecmp(EXTRA_SDCARD,"/external_sd")) {
-        CHOOSE_DELETE_MENU_ITEMS[1]="View and delete backups on /external_sd";
+     if(EXTRA_SDCARD == EMMC) {
+        CHOOSE_DELETE_MENU_ITEMS[1]="backups on /emmc";
+    } else if(EXTRA_SDCARD == EXTERNALSD) {
+        CHOOSE_DELETE_MENU_ITEMS[1]="backups on /external_sd";
     }
 
-    for (;;) {
+   for (;;) {
         char base_path[PATH_MAX];
         int chosen_item = get_menu_selection(headers, CHOOSE_DELETE_MENU_ITEMS, 0, 0);
         switch(chosen_item) {
@@ -1486,16 +1486,21 @@ void show_nandroid_advanced_menu()
     };
     
     char *other_sd = NULL;
-    if (volume_for_path("/emmc") != NULL) {
-        other_sd = "/emmc";
-        list[2] = "Advanced backup to internal_sd";
-        list[3] = "Advanced restore from internal_sd";
-    }
-    else if (volume_for_path("/external_sd") != NULL) {
-        other_sd = "/external_sd";
-        list[2] = "Advanced backup to external_sd";
-        list[3] = "Advanced restore from external_sd";
-    }	
+    switch(EXTRA_SDCARD) {
+			case EMMC: 
+				 other_sd = "/emmc";
+                                 list[2] = "Advanced backup to internal_sd";
+                                 list[3] = "Advanced restore from internal_sd";
+				break;
+
+			case EXTERNALSD:
+				 other_sd = "/external_sd";
+                                 list[2] = "Advanced backup to external_sd";
+                                 list[3] = "Advanced restore from external_sd";
+				break;
+		}
+    
+    
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
     extend_nandroid_menu(list, 4, sizeof(list) / sizeof(char*));
 #endif
@@ -1517,13 +1522,14 @@ void show_nandroid_advanced_menu()
                 break;
             case 2:
                 if (other_sd != NULL) {
+		 
                     nandroid_get_backup_path(backup_path, 1);
-					show_nandroid_advanced_backup_menu(backup_path, 1);
+		      show_nandroid_advanced_backup_menu(backup_path, 1);
                 }
                 break;
             case 3:
                 if (other_sd != NULL) {
-                    nandroid_get_backup_path(backup_path, 1);
+		    nandroid_get_backup_path(backup_path, 1);
                     show_nandroid_advanced_restore_menu(backup_path);
                 }
                 break;
@@ -1559,19 +1565,23 @@ void show_nandroid_menu()
                             NULL
     };
     
-    if(backupfmt = 0) list[6] = "Free Unused Old Data";
+    //if(backupfmt = 0) - skipped, because of will be in the list count even not listed 
+    list[6] = "Free Unused Old Data";
 
     char *other_sd = NULL;
-    if(EXTRA_SDCARD == EMMC) {
+  //  if(EXTRA_SDCARD == EMMC) 
+    if (volume_for_path("/emmc") != NULL) {
 		list[7] = "Backup to internal sdcard";
 		list[8] = "Restore from internal sdcard";
 		list[9] = "Delete from internal sdcard";
 		other_sd = "/emmc";
-	} else if (EXTRA_SDCARD == EXTERNALSD) {
+		EXTRA_SDCARD = EMMC;
+	} else if (volume_for_path("/external_sd") != NULL) {
 		list[7] = "Backup to external sdcard";
 		list[8] = "Restore from external sdcard";
 		list[9] = "Delete from external sdcard";
 		other_sd = "/external_sd";
+		EXTRA_SDCARD = EXTERNALSD;
     }
 #ifdef RECOVERY_EXTEND_NANDROID_MENU
     extend_nandroid_menu(list, 10, sizeof(list) / sizeof(char*));
@@ -1643,6 +1653,7 @@ void show_nandroid_menu()
 }
 
 static void partition_sdcard(const char* volume) {
+  ui_print("PARTITION: %s\n", volume);
     if (!can_partition(volume)) {
         ui_print("Can't partition device: %s\n", volume);
         return;
@@ -1907,20 +1918,21 @@ void show_advanced_menu()
                             "Toggle touch control",
                             "Instructions for touch control",                            
                             "partition sdcard",
-                            "partition external sdcard",
                             "partition internal sdcard",
+                            "partition external sdcard",
                             NULL
     };
     
-    if (!can_partition("/sdcard")) {
+ /*   if (!can_partition("/sdcard")) {
         list[5] = NULL;
-    }
-    if (!can_partition("/external_sd")) {
+     }
+     if (!can_partition("/emmc")) {
         list[6] = NULL;
-    }
-    if (!can_partition("/emmc")) {
+     } */ 
+     if (!can_partition("/external_sd")) {
         list[7] = NULL;
-    }
+    } 
+        
 
     for (;;)
     {
@@ -1985,10 +1997,12 @@ void show_advanced_menu()
                 partition_sdcard("/sdcard");
                 break;
             case 6:
-                partition_sdcard("/external_sd");
+	        partition_sdcard("/emmc");
+	        
                 break;
+	        
             case 7:
-                partition_sdcard("/emmc");
+                partition_sdcard("/external_sd");
                 break;
         }
     }
@@ -2183,7 +2197,8 @@ int verify_root_and_recovery() {
             if ((st.st_mode & (S_ISUID | S_ISGID)) != (S_ISUID | S_ISGID)) {
                 ui_show_text(1);
                 ret = 1;
-                if (confirm_selection("Root access possibly lost. Fix?", "Yes - Fix root (/system/bin/su)")) {
+		ui_print("Root access possibly lost.\n"); //kiszedve külön sorba, mert túl hosszú, kilép a menüből. Ugyanez lentebb is
+                if (confirm_selection("Fix?", "Yes - Fix root (/system/bin/su)")) {
                     __system("chmod 6755 /system/bin/su");
                 }
             }
@@ -2196,7 +2211,8 @@ int verify_root_and_recovery() {
             if ((st.st_mode & (S_ISUID | S_ISGID)) != (S_ISUID | S_ISGID)) {
                 ui_show_text(1);
                 ret = 1;
-                if (confirm_selection("Root access possibly lost. Fix?", "Yes - Fix root (/system/xbin/su)")) {
+		ui_print("Root access possibly lost.\n"); //kiszedve külön sorba, mert túl hosszú, kilép a menüből. Ugyanez lentebb is
+                if (confirm_selection("Fix?", "Yes - Fix root (/system/xbin/su)")) {
                     __system("chmod 6755 /system/xbin/su");
                 }
             }
@@ -2206,7 +2222,8 @@ int verify_root_and_recovery() {
     if (!exists) {
         ui_show_text(1);
         ret = 1;
-        if (confirm_selection("Root access is missing. Root device?", "Yes - Root device (/system/xbin/su)")) {
+	ui_print("Root access is missing.\n");
+        if (confirm_selection("Root device?", "Yes - Root device (/system/xbin/su)")) {
             __system("/sbin/install-su.sh");
         }
     }
