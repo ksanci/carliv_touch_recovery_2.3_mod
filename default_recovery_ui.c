@@ -42,14 +42,14 @@
 
 char* MENU_HEADERS[] = { NULL };
 
-char* MENU_ITEMS[] = { "Power Menu",
-                       "Install zip",
-                       "Wipe Menu",
-                       "Backup/Restore",
-                       "Mounts/Storage",
-                       "Advanced Menu",
+char* MENU_ITEMS[] = { "Kikapcsol\xe1s men\xfc",
+                       ".zip telep\xedt\xe9se",
+                       "T\xf6rl\xe9s men\xfc",
+                       "Ment\xe9s/Vissza\xe1ll\xedt\xe1s",
+                       "Csatol\xe1sok/T\xe1rak",
+                       "Halad\xf3",
                        "Carliv",
-                       "Reboot Phone",
+                       "\xdajraind\xedt\xe1s",
                        NULL };
 
 

@@ -929,7 +929,7 @@ main(int argc, char **argv) {
     device_ui_init(&ui_parameters);
     ui_init();
     ui_print(EXPAND(RECOVERY_VERSION)"\n");
-    ui_print("Magyar v\xe1ltozat: ksanci\n");
+    ui_print("Magyar verzi\xf3: ksanci\n");
     
 #ifdef BOARD_RECOVERY_SWIPE
 #ifndef BOARD_TOUCH_RECOVERY
