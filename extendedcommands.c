@@ -122,14 +122,15 @@ toggle_md5_check()
 }
 
 void show_power_menu() {
-	static char* headers[] = { "Power Options",
+
+    static char* headers[] = { "Kikapcsolási opciók", //Power Options
                                 "",
                                 NULL
     };
  
-    static char* list[] = { "Reboot Recovery",
-                            "Reboot to Bootloader",
-                            "Power Off",
+    static char* list[] = { "Újraindítás: Recovery", //"Reboot Recovery",
+                            "Újraindítás: Bootloader", //Reboot to Bootloader
+                            "Kikapcsolás", //Power Off
                             NULL
     };
 	
@@ -179,24 +180,24 @@ void toggle_touch_control_menu()
         return;
     }
 
-    static const char* headers[] = {  "Toggle touch control type",
+    static const char* headers[] = {  "\xc9rint\xe9svez\xe9rl\xe9s be\xe1ll\xedt\xe1sa", //Toggle touch control type
 		                                "",
 		                                NULL
     };
 
     static char* list[] = { "",			//Toggle full touch
-                            "Disable all touch",
+                            "Minden érintés tiltva",  //Disable all touch
                             NULL
     };
     
     struct stat info;
     if (0 != stat("/sdcard/clockworkmod/.full_nav", &info))
     {
-    	list[0] = "Touch control - ON";
+    	list[0] = "Érintésvezérlés - BE"; //Touch control - ON
     }
     else if (0 == stat("/sdcard/clockworkmod/.full_nav", &info))
     {
-    	list[0] = "Touch control - OFF";
+    	list[0] = "Érintésvezérlés - KI";  //Touch control - OFF
     }
     
     int chosen_item = get_menu_selection(headers, list, 0, 0);
@@ -262,27 +263,28 @@ int install_zip(const char* packagefilepath)
 
 void show_install_update_menu()
 {
-    static char* headers[] = {  "Install update from zip file",
+    static char* headers[] = {  "Friss\xedt\xe9s telep\xedt\xe9se",
+                                ".zip f\xe1jlb\xf3l", //Install update from zip file
                                 "",
                                 NULL
     };
     
-    char* install_menu_items[] = {  "Choose zip Sdcard",
-                                    "Install zip from sideload",
-                                    "Apply /sdcard/update.zip",
-                                    "Toggle Signature Verification",
-                                    "Toggle Assert Verification",
+    char* install_menu_items[] = {  "Választás SD kártyáról", //Choose zip Sdcard
+                                    "Telepítés sideload-al", //Install zip from sideload
+                                    "/sdcard/update.zip", //Apply /sdcard/update.zip
+                                    "Aláírás ellenőrzés", //Toggle Signature Verification
+                                    "Toggle Assert Verification", //Toggle Assert Verification
                                     NULL,
                                     NULL };
 
     char *other_sd = NULL;
     if (volume_for_path("/emmc") != NULL) {
         other_sd = "/emmc/";
-        install_menu_items[5] = "choose zip from internal sdcard";
+        install_menu_items[5] = "választás a belső SD kártyáról";  //choose zip from internal sdcard
     }
     else if (volume_for_path("/external_sd") != NULL) {
         other_sd = "/external_sd/";
-        install_menu_items[5] = "choose zip from external sdcard";
+        install_menu_items[5] = "választás a külső SD kártyáról"; //choose zip from external sdcard
     }
     
     for (;;)
@@ -322,15 +324,15 @@ void show_install_update_menu()
 void show_wipe_menu()
 {
 
-    static char* headers[] = {  "Wipe Menu",
+    static char* headers[] = {  "Törlés menü", //Wipe Menu
 								"",
 								NULL
     };
 
-    char* list[] = { "Wipe Data - Factory Reset",
-                            "Wipe Cache",
-                            "Wipe Dalvik Cache",
-                            "Wipe All Data - Preflash",	 	 
+    char* list[] = { "Data törlése - gyári alapbeállítások", //Wipe Data - Factory Reset
+                            "Cache törlése", //Wipe Cache
+                            "Dalvik Cache törlése", //Wipe Dalvik Cache
+                            "MINDEN törlése - upgrade előkészítés", //Wipe All Data - Preflash	 	 
                              NULL
     };
 
@@ -565,7 +567,7 @@ void show_choose_zip_menu(const char *mount_point)
         return;
     }
 
-    static char* headers[] = {  "Choose a zip to apply",
+    static char* headers[] = {  "Válaszd ki a .zip fájlt",  //Choose a zip to apply
                                 "",
                                 NULL
     };
@@ -573,9 +575,9 @@ void show_choose_zip_menu(const char *mount_point)
     char* file = choose_file_menu(mount_point, ".zip", headers);
     if (file == NULL)
         return;
-    static char* confirm_install  = "Confirm install?";
+    static char* confirm_install  = "Biztosan telepíted?";  //Confirm install?
     static char confirm[PATH_MAX];
-    sprintf(confirm, "Yes - Install %s", basename(file));
+    sprintf(confirm, "Igen - %s telepítése", basename(file)); //Yes - Install %s
     if (confirm_selection(confirm_install, confirm))
         install_zip(file);
 }
@@ -587,7 +589,7 @@ void show_nandroid_restore_menu(const char* path)
         return;
     }
 
-    static char* headers[] = {  "Choose an image to restore",
+    static char* headers[] = {  "Válassz egy mentést a visszaállításhoz", //Choose an image to restore
                                 "",
                                 NULL
     };
@@ -596,7 +598,7 @@ void show_nandroid_restore_menu(const char* path)
     if (file == NULL)
         return;
 
-    if (confirm_selection("Confirm restore?", "Yes - Restore"))
+    if (confirm_selection("Biztosan visszaállítod?", "Igen - visszaállítás")) //Confirm restore?", "Yes - Restore
         nandroid_restore(file, 1, 1, 1, 1, 1, 0);
 }
 
@@ -607,7 +609,7 @@ void show_nandroid_delete_menu(const char* path)
         return;
     }
 
-    static char* headers[] = {  "Choose an image to delete",
+    static char* headers[] = {  "Válassz egy mentést a törléshez", //Choose an image to delete
                                 "",
                                 NULL
     };
@@ -1150,7 +1152,8 @@ int is_safe_to_format(char* name)
 
 void show_partition_menu()
 {
-    static char* headers[] = {  "Mounts and Storage Menu",
+    //static char* headers[] = {  "Mounts and Storage Menu",
+    static char* headers[] = {  "Csatolások és tárak",
                                 "",
                                 NULL
     };
@@ -1296,7 +1299,8 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
 		return;
 	}
 
-	static char* advancedheaders[] = { "Choose the partitions to backup.",
+	//static char* advancedheaders[] = { "Choose the partitions to backup.",
+	static char* advancedheaders[] = { "Partíciók kiválasztása mentéshez.",
 					NULL
     };
     
@@ -1370,7 +1374,7 @@ void show_nandroid_advanced_restore_menu(const char* path)
         return;
     }
 
-    static char* advancedheaders[] = {  "Choose an image to restore",
+    static char* advancedheaders[] = {  "Mentés kiválasztása visszaállításhoz",
                                 "",
                                 "Choose an image to restore",
                                 "first. The next menu will",
