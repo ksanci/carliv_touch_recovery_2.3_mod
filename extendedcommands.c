@@ -632,15 +632,15 @@ void show_nandroid_delete_menu(const char* path)
 
 int show_choose_delete_menu() 
 {
-    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "backups on /sdcard",
+    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "mentések itt: /sdcard", //backups on /sdcard
                                                 NULL,
                                                 NULL };
 
     #define ITEM_VIEW_BACKUPS_ON_SDCARD 0
     #define ITEM_VIEW_BACKUPS_ON_OTHERSD 1
 
-    static char* headers[] = { "Choose a device to delete",
-                               "backups from.",
+    static char* headers[] = { "V\xe1lassz egy eszk\xf6zt, ahonnan", //Choose a device to delete
+                               "t\xf6rl\xf6d a ment\xe9seket", //backups from.
                                "",
                                NULL
     };
@@ -1299,8 +1299,8 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
 		return;
 	}
 
-	//static char* advancedheaders[] = { "Choose the partitions to backup.",
-	static char* advancedheaders[] = { "Partíciók kiválasztása mentéshez.",
+	static char* advancedheaders[] = { "Partíciók kiválasztása", //Choose the partitions to backup.
+	                               "mentéshez",
 					NULL
     };
     
@@ -1374,7 +1374,8 @@ void show_nandroid_advanced_restore_menu(const char* path)
         return;
     }
 
-    static char* advancedheaders[] = {  "Mentés kiválasztása visszaállításhoz",
+    static char* advancedheaders[] = {  "Mentés kiválasztása", //Choose an image to restore
+                                "visszaállításhoz",
                                 "",
                                 "Choose an image to restore",
                                 "first. The next menu will",
@@ -1477,13 +1478,14 @@ static void choose_default_backup_format() {
 
 void show_nandroid_advanced_menu()
 {
-    static char* headers[] = {  "Advanced Backup and Restore",
+    static char* headers[] = {  "Haladó mentés és",  //Advanced Backup and Restore
+                                "visszaállítás",
                                 "",
                                 NULL
     };
 
-    char* list[] = {"Advanced Backup",
-                            "Advanced Restore",
+    char* list[] = {"Haladó mentés", //Advanced Backup
+                            "Haladó visszaállítás", //Advanced Restore
                             NULL,
                             NULL,
                             NULL
@@ -1493,14 +1495,14 @@ void show_nandroid_advanced_menu()
     switch(EXTRA_SDCARD) {
 			case EMMC: 
 				 other_sd = "/emmc";
-                                 list[2] = "Advanced backup to internal_sd";
-                                 list[3] = "Advanced restore from internal_sd";
+                                 list[2] = "Haladó mentés belső SD-re"; //Advanced backup to internal_sd
+                                 list[3] = "Haladó visszaállítás belső SD-ről"; //Advanced restore from internal_sd
 				break;
 
 			case EXTERNALSD:
 				 other_sd = "/external_sd";
-                                 list[2] = "Advanced backup to external_sd";
-                                 list[3] = "Advanced restore from external_sd";
+                                 list[2] = "Haladó mentés külső SD-re"; //Advanced backup to external_sd
+                                 list[3] = "Haladó visszaállítás külső SD-ről"; //Advanced restore from external_sd
 				break;
 		}
     
@@ -1549,17 +1551,17 @@ void show_nandroid_advanced_menu()
 
 void show_nandroid_menu()
 {
-    static char* headers[] = {  "Backup and Restore",
+    static char* headers[] = {  "Mentés és visszaállítás", //Backup and Restore
                                 "",
                                 NULL
     };
 
-    char* list[] = { "Backup",
-                            "Restore",
-                            "Delete Old Backups",
-                            "Advanced Backup Restore",
-                            "Default backup format",
-                            "Toggle MD5 Verification",
+    char* list[] = { "Mentés", //Backup
+                            "Visszaállítás", //Restore
+                            "Mentések törlése", //Delete Old Backups
+                            "Haladó mentés/visszaállítás", //Advanced Backup Restore
+                            "Alapértelmezett formátum", //Default backup format
+                            "MD5 ellenőrzése", //Toggle MD5 Verification
                             NULL,
                             NULL,
                             NULL,
@@ -1575,15 +1577,15 @@ void show_nandroid_menu()
     char *other_sd = NULL;
   //  if(EXTRA_SDCARD == EMMC) 
     if (volume_for_path("/emmc") != NULL) {
-		list[7] = "Backup to internal sdcard";
-		list[8] = "Restore from internal sdcard";
-		list[9] = "Delete from internal sdcard";
+		list[7] = "Mentés a belső SD-re"; //Backup to internal sdcard
+		list[8] = "Visszaállítás belső SD-ről"; //Restore from internal sdcard
+		list[9] = "Törlés belső SD-ről"; //Delete from internal sdcard
 		other_sd = "/emmc";
 		EXTRA_SDCARD = EMMC;
 	} else if (volume_for_path("/external_sd") != NULL) {
-		list[7] = "Backup to external sdcard";
-		list[8] = "Restore from external sdcard";
-		list[9] = "Delete from external sdcard";
+		list[7] = "Mentés a külső SD-re"; //Backup to external sdcard
+		list[8] = "Visszaállítás külső SD-ről"; //Restore from external sdcard
+		list[9] = "Törlés külső SD-ről"; //Delete from external sdcard
 		other_sd = "/external_sd";
 		EXTRA_SDCARD = EXTERNALSD;
     }
@@ -1657,7 +1659,7 @@ void show_nandroid_menu()
 }
 
 static void partition_sdcard(const char* volume) {
-  ui_print("PARTITION: %s\n", volume);
+  ui_print("PARTÍCIÓ: %s\n", volume);
     if (!can_partition(volume)) {
         ui_print("Can't partition device: %s\n", volume);
         return;
@@ -1911,19 +1913,19 @@ void show_carliv_menu()
 
 void show_advanced_menu()
 {
-    static char* headers[] = {  "Advanced Menu",
+    static char* headers[] = {  "Haladó menü", //Advanced Menu
                                 "",
                                 NULL
     };
 
-    static char* list[] = { "report error",
-                            "key test",
-                            "show log",
-                            "Toggle touch control",
-                            "Instructions for touch control",                            
-                            "partition sdcard",
-                            "partition internal sdcard",
-                            "partition external sdcard",
+    static char* list[] = { "hibajelentés", //report error
+                            "billentyűteszt", //key test
+                            "log", //show log
+                            "Érintésvezérlés", //Toggle touch control
+                            "Segítség az érintésvezérléshez", //Instructions for touch control                           
+                            "SD kártya partícionálása", //partition sdcard
+                            "belső SD partícionálása", //partition internal sdcard
+                            "külső SD partícionálása", //partition external sdcard
                             NULL
     };
     
