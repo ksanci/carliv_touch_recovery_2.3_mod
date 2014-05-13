@@ -1301,6 +1301,7 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
 
 	static char* advancedheaders[] = { "Partíciók kiválasztása", //Choose the partitions to backup.
 	                               "mentéshez",
+					"",
 					NULL
     };
     
@@ -1320,29 +1321,29 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
     int cont = 1;
     for (;cont;) {
 		if (backup_list[0] == 1)
-			list[0] = "Backup boot: Yes";
+			list[0] = "boot mentése: igen"; //Backup boot: Yes
 		else
-			list[0] = "Backup boot: No";
+			list[0] = "boot mentése: nem"; //Backup boot: No
 			
 		if (backup_list[1] == 1)
-	    	list[1] = "Backup recovery: Yes";
+	    	list[1] = "recovery mentése: igen"; //Backup recovery: Yes
 	    else
-	    	list[1] = "Backup recovery: No";
+	    	list[1] = "recovery mentése: nem"; //Backup recovery: No
 	    	
 	    if (backup_list[2] == 1)
-    		list[2] = "Backup system: Yes";
+    		list[2] = "system mentése: igen"; //Backup system: Yes
 	    else
-	    	list[2] = "Backup system: No";
+	    	list[2] = "system mentése: nem"; //Backup system: No
 
 	    if (backup_list[3] == 1)
-	    	list[3] = "Backup data: Yes";
+	    	list[3] = "data mentése: igen"; //Backup data: Yes
 	    else
-	    	list[3] = "Backup data: No";
+	    	list[3] = "data mentése: nem"; //Backup data: No
 
 	    if (backup_list[4] == 1)
-	    	list[4] = "Backup cache: Yes";
+	    	list[4] = "cache mentése: igen"; //Backup cache: Yes
 	    else
-	    	list[4] = "Backup cache: No";
+	    	list[4] = "cache metése: nem"; //Backup cache: No
 	    	
 	    int chosen_item = get_menu_selection (advancedheaders, list, 0, 0);
 	    switch (chosen_item) {
@@ -1377,9 +1378,9 @@ void show_nandroid_advanced_restore_menu(const char* path)
     static char* advancedheaders[] = {  "Mentés kiválasztása", //Choose an image to restore
                                 "visszaállításhoz",
                                 "",
-                                "Choose an image to restore",
-                                "first. The next menu will",
-                                "show you more options.",
+                                "Először válassz egy mentést.", //Choose an image to restore
+                                "A következő menü fogja", //first. The next menu will
+                                "mutatni a lehetőségeket.", //show you more options.
                                 "",
                                 NULL
     };
@@ -1388,17 +1389,17 @@ void show_nandroid_advanced_restore_menu(const char* path)
     if (file == NULL)
         return;
 
-    static char* headers[] = {  "Advanced Restore",
+    static char* headers[] = {  "Haladó visszaállítás", //Advanced Restore
                                 "",
                                 NULL
     };
 
-    static char* list[] = { "Restore boot",
-                            "Restore system",
-                            "Restore data",
-                            "Restore cache",
-                            "Restore sd-ext",
-                            "Restore wimax",
+    static char* list[] = { "boot visszaállítása", //Restore boot
+                            "system visszaállítása", //Restore system
+                            "data visszaállítása", //Restore data
+                            "cache visszaállítása", //Restore cache
+                            "sd-ext visszaállítása", //Restore sd-ext
+                            "wimax visszaállítása", //Restore wimax
                             NULL
     };
     
