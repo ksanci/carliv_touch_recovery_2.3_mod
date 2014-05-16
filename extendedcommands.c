@@ -589,7 +589,8 @@ void show_nandroid_restore_menu(const char* path)
         return;
     }
 
-    static char* headers[] = {  "Válassz egy mentést a visszaállításhoz", //Choose an image to restore
+    static char* headers[] = {  "V\xe1lassz egy ment\xe9st", //Choose an image to restore
+                                "a vissza\xe1ll\xedt\xe1shoz",
                                 "",
                                 NULL
     };
@@ -609,7 +610,7 @@ void show_nandroid_delete_menu(const char* path)
         return;
     }
 
-    static char* headers[] = {  "Válassz egy mentést a törléshez", //Choose an image to delete
+    static char* headers[] = {  "V\xe1lassz egy ment\xe9st a t\xf6rl\xe9shez", //Choose an image to delete
                                 "",
                                 NULL
     };
