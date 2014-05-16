@@ -610,7 +610,8 @@ void show_nandroid_delete_menu(const char* path)
         return;
     }
 
-    static char* headers[] = {  "V\xe1lassz egy ment\xe9st a t\xf6rl\xe9shez", //Choose an image to delete
+    static char* headers[] = {  "V\xe1lassz egy ment\xe9st",  //Choose an image to delete
+                                "a t\xf6rl\xe9shez",
                                 "",
                                 NULL
     };
