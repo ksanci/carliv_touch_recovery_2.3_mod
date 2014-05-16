@@ -104,14 +104,14 @@ void
 toggle_signature_check()
 {
     signature_check_enabled = !signature_check_enabled;
-    ui_print("Signature Check: %s\n", signature_check_enabled ? "Enabled" : "Disabled");
+    ui_print("Al\xe1\xedr\xe1sellen\xf5rz\xe9s: %s\n", signature_check_enabled ? "Enged\xe9lyezve" : "Tiltva"); //Signature Check: Enabled Disabled
 }
 
 void
 toggle_script_assert_check()
 {
     script_assert_enabled = !script_assert_enabled;
-    ui_print("Script assert Check: %s\n", script_assert_enabled ? "Enabled" : "Disabled");
+    ui_print("Script assert Check: %s\n", script_assert_enabled ? "Enged\xe9lyezve" : "Tiltva");
 }
 
 void
@@ -123,21 +123,21 @@ toggle_md5_check()
 
 void show_power_menu() {
 
-    static char* headers[] = { "Kikapcsolási opciók", //Power Options
+    static char* headers[] = { "Kikapcsol\xe1si opci\xf3k", //Power Options
                                 "",
                                 NULL
     };
  
-    static char* list[] = { "Újraindítás: Recovery", //"Reboot Recovery",
-                            "Újraindítás: Bootloader", //Reboot to Bootloader
-                            "Kikapcsolás", //Power Off
+    static char* list[] = { "\xdajraind\xedt\xe1s:  Recovery", //"Reboot Recovery",
+                            "\xdajraind\xedt\xe1s:  Bootloader", //Reboot to Bootloader
+                            "Kikapcsol\xe1s", //Power Off
                             NULL
     };
 	
 	char bootloader_mode[PROPERTY_VALUE_MAX];
     property_get("ro.bootloader.mode", bootloader_mode, "");
     if (!strcmp(bootloader_mode, "download")) {
-        list[1] = "Reboot to Download";
+        list[1] = "\xdajraind\xedt\xe1s: Let\xf6lt\xe9s"; //Reboot to Download
     }
     
 	for (;;) 
@@ -148,24 +148,24 @@ void show_power_menu() {
 		switch (chosen_item) {	
 			case POWER_ITEM_RECOVERY:
 			{
-                ui_print("Rebooting recovery...\n");
+                ui_print("\xdajraind\xedt\xe1s recovery m\xf3dban...\n"); //Rebooting recovery...
                 reboot_main_system(ANDROID_RB_RESTART2, 0, "recovery");
                 break;
             }
 			case POWER_ITEM_BOOTLOADER:
 			{
                 if (!strcmp(bootloader_mode, "download")) {
-                    ui_print("Rebooting to download mode...\n");
+                    ui_print("\xdajraind\xedt\xe1s let\xf6lt\xe9s m\xf3dban...\n"); //Rebooting to download mode...
                     reboot_main_system(ANDROID_RB_RESTART2, 0, "download");
                 } else {
-                    ui_print("Rebooting to bootloader...\n");
+                    ui_print("\xdajraind\xedt\xe1s bootloader m\xf3dban...\n"); //Rebooting to bootloader...
                     reboot_main_system(ANDROID_RB_RESTART2, 0, "bootloader");
                 }
                 break;
             }	
 			case POWER_ITEM_POWEROFF:
 			{
-                ui_print("Shutting down...\n");
+                ui_print("Le\xe1ll\xedt\xe1s...\n"); //Shutting down...
                 reboot_main_system(ANDROID_RB_POWEROFF, 0, 0);
                 break;
             }
@@ -176,7 +176,7 @@ void show_power_menu() {
 void toggle_touch_control_menu() 
 {
     if (ensure_path_mounted("/sdcard/") != 0) {
-        LOGE ("Can't mount sdcard\n");
+        LOGE ("SD k\xe1rtya nem csatolhat\xf3\n"); //Can't mount sdcard
         return;
     }
 
@@ -186,18 +186,18 @@ void toggle_touch_control_menu()
     };
 
     static char* list[] = { "",			//Toggle full touch
-                            "Minden érintés tiltva",  //Disable all touch
+                            "Minden \xe9rint\xe9s tiltva",  //Disable all touch
                             NULL
     };
     
     struct stat info;
     if (0 != stat("/sdcard/clockworkmod/.full_nav", &info))
     {
-    	list[0] = "Érintésvezérlés - BE"; //Touch control - ON
+    	list[0] = "\xc9rint\xe9svez\xe9rl\xe9s - BE"; //Touch control - ON
     }
     else if (0 == stat("/sdcard/clockworkmod/.full_nav", &info))
     {
-    	list[0] = "Érintésvezérlés - KI";  //Touch control - OFF
+    	list[0] = "\xc9rint\xe9svez\xe9rl\xe9s - KI";  //Touch control - OFF
     }
     
     int chosen_item = get_menu_selection(headers, list, 0, 0);
@@ -208,16 +208,16 @@ void toggle_touch_control_menu()
             	if (0 != stat("/sdcard/clockworkmod/.full_nav", &info))
             	{
 		    	__system("touch /sdcard/clockworkmod/.full_nav");
-		    	ui_print("Full touch control disabled\n");
+		    	ui_print("Teljes \xe9rint\xe9svez\xe9rl\xe9s kikapcsolva\n"); //Full touch control disabled
 				}
 				else if (0 == stat("/sdcard/clockworkmod/.full_nav", &info))
 				{
 				    	__system("rm /sdcard/clockworkmod/.full_nav");
-				    	ui_print("Full touch control enabled\n");
-				    	ui_print("Click on buttons on screen for selection.\n");
-				    	ui_print("Swipe left for Go Back.\n");
-				    	ui_print("Swipe right for Scroll Down.\n");
-				    	ui_print("Swipe left for Scroll Up.\n");
+				    	ui_print("Teljes \xe9rint\xe9svez\xe9rl\xe9s bekapcsolva\n"); //Full touch control enabled
+				    	ui_print("\xc9rintsd meg a gombokat a k\xe9perny\xf5n a kiv\xe1laszt\xe1sukhoz.\n"); //Click on buttons on screen for selection.
+				    	ui_print("Legyint\xe9s balra: Vissza\n"); //Swipe left for Go Back.
+				    	ui_print("Legyint\xe9s jobbra: g\xf6rget\xe9s lefel\xe9\n"); //Swipe right for Scroll Down.
+				    	ui_print("Legyint\xe9s balra: g\xf6rget\xe9s felfel\xe9\n"); //Swipe left for Scroll Up.
 				}
 				
 				toggle_touch_control_menu();
@@ -226,8 +226,8 @@ void toggle_touch_control_menu()
         case 1:
             {
 		    	__system("touch /sdcard/clockworkmod/.full_nav");
-		    	ui_print("Full touch control disabled\n");
-		    	ui_print("Use Volume/Power keys to navigate.\n");
+		    	ui_print("Teljes \xe9rint\xe9svez\xe9rl\xe9s kikapcsolva\n"); //Full touch control disabled
+		    	ui_print("Haszn\xe1ld a hanger\xf5gombokat \xe9s a bekapcsol\xf3 gombot a navig\xe1l\xe1shoz.\n"); //Use Volume/Power keys to navigate
 			toggle_touch_control_menu();
 	            }
 	            break;
@@ -237,7 +237,7 @@ void toggle_touch_control_menu()
 
 int install_zip(const char* packagefilepath)
 {
-    ui_print("\n-- Installing: %s\n", packagefilepath);
+    ui_print("\n-- %s telep\xedt\xe9se\n", packagefilepath); //Installing:
     if (device_flash_type() == MTD) {
         set_sdcard_update_bootloader_message();
     }
@@ -245,11 +245,11 @@ int install_zip(const char* packagefilepath)
     ui_reset_progress();
     if (status != INSTALL_SUCCESS) {
         ui_set_background(BACKGROUND_ICON_ERROR);
-        ui_print("Installation aborted.\n");
+        ui_print("Telep\xedt\xe9s megszak\xedtva!\n"); //Installation aborted.
         return 1;
     }
     ui_set_background(BACKGROUND_ICON_NONE);
-    ui_print("\nInstall from sdcard complete.\n");
+    ui_print("\nTelep\xedt\xe9s SD t\xe1rhelyr\xf5l:k\xe9sz.\n"); //Install from sdcard complete.
     ui_reset_icons();
     return 0;
 }
@@ -269,10 +269,10 @@ void show_install_update_menu()
                                 NULL
     };
     
-    char* install_menu_items[] = {  "Választás SD kártyáról", //Choose zip Sdcard
-                                    "Telepítés sideload-al", //Install zip from sideload
+    char* install_menu_items[] = {  "V\xe1laszt\xe1s SD k\xe1rty\xe1r\xf3l", //Choose zip Sdcard
+                                    "Telep\xedt\xe9s sideload-al", //Install zip from sideload
                                     "/sdcard/update.zip", //Apply /sdcard/update.zip
-                                    "Aláírás ellenőrzés", //Toggle Signature Verification
+                                    "Al\xe1\xedr\xe1s ellen\xf5rz\xe9s", //Toggle Signature Verification
                                     "Toggle Assert Verification", //Toggle Assert Verification
                                     NULL,
                                     NULL };
@@ -280,11 +280,11 @@ void show_install_update_menu()
     char *other_sd = NULL;
     if (volume_for_path("/emmc") != NULL) {
         other_sd = "/emmc/";
-        install_menu_items[5] = "választás a belső SD kártyáról";  //choose zip from internal sdcard
+        install_menu_items[5] = "v\xe1laszt\xe1s a bels\xf5 SD k\xe1rty\xe1r\xf3l";  //choose zip from internal sdcard
     }
     else if (volume_for_path("/external_sd") != NULL) {
         other_sd = "/external_sd/";
-        install_menu_items[5] = "választás a külső SD kártyáról"; //choose zip from external sdcard
+        install_menu_items[5] = "v\xe1laszt\xe1s a k\xfcls\xf5 SD k\xe1rty\xe1r\xf3l"; //choose zip from external sdcard
     }
     
     for (;;)
@@ -300,7 +300,7 @@ void show_install_update_menu()
                 break;    
             case ITEM_APPLY_UPDATE:
             {
-                if (confirm_selection("Confirm install?", "Yes - Install /sdcard/update.zip"))
+                if (confirm_selection("Telep\xedtsem?", "Igen - /sdcard/update.zip telep\xedt\xe9se")) //Confirm install?", "Yes - Install /sdcard/update.zip
                     install_zip(SDCARD_UPDATE_FILE);
                 break;
             }
@@ -324,15 +324,15 @@ void show_install_update_menu()
 void show_wipe_menu()
 {
 
-    static char* headers[] = {  "Törlés menü", //Wipe Menu
+    static char* headers[] = {  "T\xf6rl\xe9s men\xfc", //Wipe Menu
 								"",
 								NULL
     };
 
-    char* list[] = { "Data törlése - gyári alapbeállítások", //Wipe Data - Factory Reset
-                            "Cache törlése", //Wipe Cache
-                            "Dalvik Cache törlése", //Wipe Dalvik Cache
-                            "MINDEN törlése - upgrade előkészítés", //Wipe All Data - Preflash	 	 
+    char* list[] = { "Data t\xf6rl\xe9se - gy\xe1ri alapbe\xe1ll\xedt\xe1sok", //Wipe Data - Factory Reset
+                            "Cache t\xf6rl\xe9se", //Wipe Cache
+                            "Dalvik Cache t\xf6rl\xe9se", //Wipe Dalvik Cache
+                            "MINDEN t\xf6rl\xe9se - upgrade el\xf5k\xe9sz\xedt\xe9s", //Wipe All Data - Preflash	 	 
                              NULL
     };
 
@@ -392,7 +392,7 @@ char** gather_files(const char* directory, const char* fileExtensionOrDirectory,
 
     dir = opendir(directory);
     if (dir == NULL) {
-        ui_print("Couldn't open directory.\n");
+        ui_print("A mapp\xe1t nem lehet megnyitni!\n"); //Couldn't open directory.
         return NULL;
     }
 
@@ -454,7 +454,7 @@ char** gather_files(const char* directory, const char* fileExtensionOrDirectory,
     }
 
     if(closedir(dir) < 0) {
-        LOGE("Failed to close directory.");
+        LOGE("Mappa bez\xe1r\xe1sa sikertelen!"); //Failed to close directory.
     }
 
     if (total==0) {
@@ -512,7 +512,7 @@ char* choose_file_menu(const char* directory, const char* fileExtensionOrDirecto
     int total = numDirs + numFiles;
     if (total == 0)
     {
-        ui_print("No files found.\n");
+        ui_print("Nincsenek f\xe1jlok\n"); //No files found.
     }
     else
     {
@@ -563,11 +563,11 @@ char* choose_file_menu(const char* directory, const char* fileExtensionOrDirecto
 void show_choose_zip_menu(const char *mount_point)
 {
     if (ensure_path_mounted(mount_point) != 0) {
-        LOGE ("Can't mount %s\n", mount_point);
+        LOGE ("%s nem csatolhat\xf3\n", mount_point); //Can't mount
         return;
     }
 
-    static char* headers[] = {  "Válaszd ki a .zip fájlt",  //Choose a zip to apply
+    static char* headers[] = {  "V\xe1laszd ki a .zip f\xe1jlt",  //Choose a zip to apply
                                 "",
                                 NULL
     };
@@ -575,9 +575,9 @@ void show_choose_zip_menu(const char *mount_point)
     char* file = choose_file_menu(mount_point, ".zip", headers);
     if (file == NULL)
         return;
-    static char* confirm_install  = "Biztosan telepíted?";  //Confirm install?
+    static char* confirm_install  = "Biztosan telep\xedted?";  //Confirm install?
     static char confirm[PATH_MAX];
-    sprintf(confirm, "Igen - %s telepítése", basename(file)); //Yes - Install %s
+    sprintf(confirm, "Igen - %s telep\xedt\xe9se", basename(file)); //Yes - Install %s
     if (confirm_selection(confirm_install, confirm))
         install_zip(file);
 }
@@ -585,7 +585,7 @@ void show_choose_zip_menu(const char *mount_point)
 void show_nandroid_restore_menu(const char* path)
 {
     if (ensure_path_mounted(path) != 0) {
-        LOGE("Can't mount %s\n", path);
+        LOGE("%s nem csatolhat\xf3\n", path); //Can't mount
         return;
     }
 
@@ -599,14 +599,14 @@ void show_nandroid_restore_menu(const char* path)
     if (file == NULL)
         return;
 
-    if (confirm_selection("Biztosan visszaállítod?", "Igen - visszaállítás")) //Confirm restore?", "Yes - Restore
+    if (confirm_selection("Biztosan vissza\xe1ll\xedtod?", "Igen - vissza\xe1ll\xedt\xe1s")) //Confirm restore?", "Yes - Restore
         nandroid_restore(file, 1, 1, 1, 1, 1, 0);
 }
 
 void show_nandroid_delete_menu(const char* path)
 {
     if (ensure_path_mounted(path) != 0) {
-        LOGE("Can't mount %s\n", path);
+        LOGE("%s nem csatolhat\xf3\n", path); //Can't mount 
         return;
     }
 
@@ -620,21 +620,21 @@ void show_nandroid_delete_menu(const char* path)
     if (file == NULL)
         return;
 
-    if (confirm_selection("Confirm delete?", "Yes - Delete")) {
+    if (confirm_selection("Biztosan t\xf6r\xf6ljem?", "Igen - t\xf6rl\xe9s")) { //Confirm delete?", "Yes - Delete
         // nandroid_restore(file, 1, 1, 1, 1, 1, 0);
         char tmp[PATH_MAX];
-        ui_print("Deleting %s\n", basename(file));
+        ui_print("%s t\xf6rl\xe9se\n", basename(file)); //Deleting
         sprintf(tmp, "rm -rf %s", file);
         __system(tmp);
-        ui_print("Backup deleted!\n");
+        ui_print("A ment\xe9s t\xf6r\xf6lve!\n"); //Backup deleted!
         uint64_t sdcard_free_mb = recalc_sdcard_space(path);
-		ui_print("SD Card space free: %lluMB\n", sdcard_free_mb);
+		ui_print("Szabad hely az SD k\xe1rty\xe1n: %lluMB\n", sdcard_free_mb); //SD Card space free:
     }
 }
 
 int show_choose_delete_menu() 
 {
-    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "mentések itt: /sdcard", //backups on /sdcard
+    static char *CHOOSE_DELETE_MENU_ITEMS[] = { "ment\xe9sek ezen: /sdcard", //backups on /sdcard
                                                 NULL,
                                                 NULL };
 
@@ -648,9 +648,9 @@ int show_choose_delete_menu()
     };
 
      if(EXTRA_SDCARD == EMMC) {
-        CHOOSE_DELETE_MENU_ITEMS[1]="backups on /emmc";
+        CHOOSE_DELETE_MENU_ITEMS[1]="ment\xe9sek ezen: /emmc"; //backups on /emmc
     } else if(EXTRA_SDCARD == EXTERNALSD) {
-        CHOOSE_DELETE_MENU_ITEMS[1]="backups on /external_sd";
+        CHOOSE_DELETE_MENU_ITEMS[1]="ment\xe9sek ezen: /external_sd"; //backups on /external_sd
     }
 
    for (;;) {
@@ -664,7 +664,7 @@ int show_choose_delete_menu()
                 nandroid_get_backup_path(base_path, 1);
                 break;
             default:
-                ui_print("Cancelling backup.\n");
+                ui_print("Ment\xe9s kihagyva.\n"); //Cancelling backup.
                 return 1;
         }
         show_nandroid_delete_menu(base_path);
@@ -682,13 +682,13 @@ static void run_dedupe_gc(const char* other_sd) {
 	sprintf(tmp, "%s/blobs", path);
 	nandroid_dedupe_gc(tmp);
     uint64_t sdcard_free_mb = recalc_sdcard_space(path);
-    ui_print("SD Card space free: %lluMB\n", sdcard_free_mb);
+    ui_print("Szabad hely az SD k\xe1rty\xe1n: %lluMB\n", sdcard_free_mb); //SD Card space free:
 }
 
 int show_lowspace_menu(int i, const char* backup_path)
 {
-	static char *LOWSPACE_MENU_ITEMS[5] = { "Continue with backup",
-											"View and delete old backups",
+	static char *LOWSPACE_MENU_ITEMS[5] = { "Folytat\xe1s a ment\xe9ssel", //Continue with backup
+											"R\xe9gi ment\xe9sek, t\xf6rl\xe9s", //View and delete old backups
                                             NULL,
                                             NULL,
 											NULL };
@@ -698,19 +698,19 @@ int show_lowspace_menu(int i, const char* backup_path)
     #define ITEM_FREE_DATA_OR_CANCEL 2
 
     if(!backupfmt) {
-        LOWSPACE_MENU_ITEMS[2] = "Free unused backup data";
-        LOWSPACE_MENU_ITEMS[3] = "Cancel backup";
+        LOWSPACE_MENU_ITEMS[2] = "Nem haszn\xe1lt ment\xe9si adatok t\xf6rl\xe9se"; //Free unused backup data
+        LOWSPACE_MENU_ITEMS[3] = "Ment\xe9s kihagy\xe1sa"; //Cancel backup
     } else {
-        LOWSPACE_MENU_ITEMS[2] = "Cancel backup";
+        LOWSPACE_MENU_ITEMS[2] = "Ment\xe9s kihagy\xe1sa"; //Cancel backup
         LOWSPACE_MENU_ITEMS[3] = NULL;
     }
 
-	static char* headers[] = { "Limited space available!",
+	static char* headers[] = { "Figyelem! Kev\xe9s hely!", //Limited space available!
 								"",
-								"There may not be enough space",
-								"to continue backup.",
+								"Val\xf3sz\xedn\xfbleg nem lesz el\xe9g", //There may not be enough space
+								"hely a ment\xe9shez!", //to continue backup.
 								"",
-								"What would you like to do?",
+								"Mit szeretn\xe9l tenni?", //What would you like to do?
 								"",
 								NULL
 	};
@@ -719,7 +719,7 @@ int show_lowspace_menu(int i, const char* backup_path)
 		int chosen_item = get_menu_selection(headers, LOWSPACE_MENU_ITEMS, 0, 0);
 		switch(chosen_item) {
 			case ITEM_CONTINUE_BACKUP: {
-				ui_print("Proceeding with backup.\n");
+				ui_print("Ment\xe9s v\xe9grehajt\xe1sa\n"); //Proceeding with backup.
 				return 0;
 			}
 			case ITEM_VIEW_DELETE_BACKUPS: {
@@ -734,7 +734,7 @@ int show_lowspace_menu(int i, const char* backup_path)
             }
             case ITEM_FREE_DATA_OR_CANCEL: {
                 if(backupfmt) {
-                    ui_print("Cancelling backup.\n");
+                    ui_print("Ment\xe9s kihagy\xe1sa\n"); //Cancelling backup.
                     return 1;
                 }
                 char *other_sd = NULL;
@@ -752,7 +752,7 @@ int show_lowspace_menu(int i, const char* backup_path)
                 break;
             }
 			default:
-				ui_print("Cancelling backup.\n");
+				ui_print("Ment\xe9s kihagy\xe1sa\n"); //Cancelling backup.
 				return 1;
 		}
 	}
@@ -926,26 +926,26 @@ int confirm_selection(const char* title, const char* confirm)
     if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
         return 1;
 
-    char* confirm_headers[]  = {  title, "  THIS CAN NOT BE UNDONE.", "", NULL };
+    char* confirm_headers[]  = {  title, "  NEM VISSZAVONHAT\xd3!", "", NULL }; //THIS CAN NOT BE UNDONE.
     int many_confirm = 0 == stat("/sdcard/clockworkmod/.many_confirm", &info);
     if (many_confirm) {
-        char* items[] = { "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
+        char* items[] = { "Nem", //No
+                        "Nem",
+                        "Nem",
+                        "Nem",
+                        "Nem",
+                        "Nem",
+                        "Nem",
                         confirm, //" Yes -- wipe partition",   // [7]
-                        "No",
-                        "No",
-                        "No",
+                        "Nem",
+                        "Nem",
+                        "Nem",
                         NULL };
         int chosen_item = get_menu_selection(confirm_headers, items, 0, 0);
         return chosen_item == 7;
     }
     else {
-        char* items[] = { "No",
+        char* items[] = { "Nem", //No
                         confirm, //" Yes -- wipe partition",   // [1]
                         NULL };
         int chosen_item = get_menu_selection(confirm_headers, items, 0, 0);
@@ -964,7 +964,7 @@ int format_device(const char *device, const char *path, const char *fs_type) {
         // silent failure for sd-ext
         if (strcmp(path, "/sd-ext") == 0)
             return -1;
-        LOGE("unknown volume \"%s\"\n", path);
+        LOGE("ismeretlen k\xf6tet: \"%s\"\n", path); //unknown volume
         return -1;
     }
     if (is_data_media_volume_path(path)) {
@@ -975,7 +975,7 @@ int format_device(const char *device, const char *path, const char *fs_type) {
     }
     if (strcmp(fs_type, "ramdisk") == 0) {
         // you can't format the ramdisk.
-        LOGE("can't format_volume \"%s\"", path);
+        LOGE("nem form\xe1zhat\xf3 a k\xf6tet: \"%s\"", path); //can't format_volume
         return -1;
     }
 
@@ -1043,7 +1043,7 @@ int format_device(const char *device, const char *path, const char *fs_type) {
 
 int format_unknown_device(const char *device, const char* path, const char *fs_type)
 {
-    LOGI("Formatting unknown device.\n");
+    LOGI("Ismeretlen eszk\xf6z form\xe1z\xe1sa\n"); //Formatting unknown devic
 
     if (fs_type != NULL && get_flash_type(fs_type) != UNSUPPORTED)
         return erase_raw_partition(fs_type, device);
@@ -1055,7 +1055,7 @@ int format_unknown_device(const char *device, const char* path, const char *fs_t
         Volume *vol = volume_for_path("/sd-ext");
         if (vol == NULL || 0 != stat(vol->device, &st))
         {
-            LOGI("No app2sd partition found. Skipping format of /sd-ext.\n");
+            LOGI("Nincs app2sd part\xed\x63i\xf3. /sd-ext form\xe1z\xe1s\xe1sa kihagyva.\n"); //No app2sd partition found. Skipping format of /sd-ext.
             return 0;
         }
     }
@@ -1155,7 +1155,7 @@ int is_safe_to_format(char* name)
 void show_partition_menu()
 {
     //static char* headers[] = {  "Mounts and Storage Menu",
-    static char* headers[] = {  "Csatolások és tárak",
+    static char* headers[] = {  "Csatol\xe1sok \xe9s t\xe1rak",
                                 "",
                                 NULL
     };
@@ -1301,8 +1301,8 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
 		return;
 	}
 
-	static char* advancedheaders[] = { "Partíciók kiválasztása", //Choose the partitions to backup.
-	                               "mentéshez",
+	static char* advancedheaders[] = { "Part\xed\x63i\xf3k kiv\xe1laszt\xe1sa", //Choose the partitions to backup.
+	                               "ment\xe9shez",
 					"",
 					NULL
     };
@@ -1323,29 +1323,29 @@ void show_nandroid_advanced_backup_menu(const char *path, int other_sd)
     int cont = 1;
     for (;cont;) {
 		if (backup_list[0] == 1)
-			list[0] = "boot mentése: igen"; //Backup boot: Yes
+			list[0] = "boot ment\xe9se: igen"; //Backup boot: Yes
 		else
-			list[0] = "boot mentése: nem"; //Backup boot: No
+			list[0] = "boot ment\xe9se: nem"; //Backup boot: No
 			
 		if (backup_list[1] == 1)
-	    	list[1] = "recovery mentése: igen"; //Backup recovery: Yes
+	    	list[1] = "recovery ment\xe9se: igen"; //Backup recovery: Yes
 	    else
-	    	list[1] = "recovery mentése: nem"; //Backup recovery: No
+	    	list[1] = "recovery ment\xe9se: nem"; //Backup recovery: No
 	    	
 	    if (backup_list[2] == 1)
-    		list[2] = "system mentése: igen"; //Backup system: Yes
+    		list[2] = "system ment\xe9se: igen"; //Backup system: Yes
 	    else
-	    	list[2] = "system mentése: nem"; //Backup system: No
+	    	list[2] = "system ment\xe9se: nem"; //Backup system: No
 
 	    if (backup_list[3] == 1)
-	    	list[3] = "data mentése: igen"; //Backup data: Yes
+	    	list[3] = "data ment\xe9se: igen"; //Backup data: Yes
 	    else
-	    	list[3] = "data mentése: nem"; //Backup data: No
+	    	list[3] = "data ment\xe9se: nem"; //Backup data: No
 
 	    if (backup_list[4] == 1)
-	    	list[4] = "cache mentése: igen"; //Backup cache: Yes
+	    	list[4] = "cache ment\xe9se: igen"; //Backup cache: Yes
 	    else
-	    	list[4] = "cache metése: nem"; //Backup cache: No
+	    	list[4] = "cache met\xe9se: nem"; //Backup cache: No
 	    	
 	    int chosen_item = get_menu_selection (advancedheaders, list, 0, 0);
 	    switch (chosen_item) {
@@ -1377,12 +1377,12 @@ void show_nandroid_advanced_restore_menu(const char* path)
         return;
     }
 
-    static char* advancedheaders[] = {  "Mentés kiválasztása", //Choose an image to restore
-                                "visszaállításhoz",
+    static char* advancedheaders[] = {  "Ment\xe9s kiv\xe1laszt\xe1sa", //Choose an image to restore
+                                "vissza\xe1ll\xedt\xe1shoz",
                                 "",
-                                "Először válassz egy mentést.", //Choose an image to restore
-                                "A következő menü fogja", //first. The next menu will
-                                "mutatni a lehetőségeket.", //show you more options.
+                                "El\xf5sz\xf6r v\xe1lassz egy ment\xe9st.", //Choose an image to restore
+                                "A k\xf6vetkez\xf5 men\xfc fogja", //first. The next menu will
+                                "mutatni a lehet\xf5s\xe9geket.", //show you more options.
                                 "",
                                 NULL
     };
@@ -1391,17 +1391,17 @@ void show_nandroid_advanced_restore_menu(const char* path)
     if (file == NULL)
         return;
 
-    static char* headers[] = {  "Haladó visszaállítás", //Advanced Restore
+    static char* headers[] = {  "Halad\xf3 vissza\xe1ll\xedt\xe1s", //Advanced Restore
                                 "",
                                 NULL
     };
 
-    static char* list[] = { "boot visszaállítása", //Restore boot
-                            "system visszaállítása", //Restore system
-                            "data visszaállítása", //Restore data
-                            "cache visszaállítása", //Restore cache
-                            "sd-ext visszaállítása", //Restore sd-ext
-                            "wimax visszaállítása", //Restore wimax
+    static char* list[] = { "boot vissza\xe1ll\xedt\xe1sa", //Restore boot
+                            "system vissza\xe1ll\xedt\xe1sa", //Restore system
+                            "data vissza\xe1ll\xedt\xe1sa", //Restore data
+                            "cache vissza\xe1ll\xedt\xe1sa", //Restore cache
+                            "sd-ext vissza\xe1ll\xedt\xe1sa", //Restore sd-ext
+                            "wimax vissza\xe1ll\xedt\xe1sa", //Restore wimax
                             NULL
     };
     
@@ -1410,51 +1410,51 @@ void show_nandroid_advanced_restore_menu(const char* path)
         list[5] = NULL;
     }
 
-    static char* confirm_restore  = "Confirm restore?";
+    static char* confirm_restore  = "Biztosan visszaállítod?"; //Confirm restore?
 
     int chosen_item = get_menu_selection(headers, list, 0, 0);
     switch (chosen_item)
     {
         case 0:
-            if (confirm_selection(confirm_restore, "Yes - Restore boot"))
+            if (confirm_selection(confirm_restore, "Igen - boot vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore boot
                 nandroid_restore(file, 1, 0, 0, 0, 0, 0);
             break;
         case 1:
-            if (confirm_selection(confirm_restore, "Yes - Restore system"))
+            if (confirm_selection(confirm_restore, "Igen - system vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore system
                 nandroid_restore(file, 0, 1, 0, 0, 0, 0);
             break;
         case 2:
-            if (confirm_selection(confirm_restore, "Yes - Restore data"))
+            if (confirm_selection(confirm_restore, "Igen - data vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore data
                 nandroid_restore(file, 0, 0, 1, 0, 0, 0);
             break;
         case 3:
-            if (confirm_selection(confirm_restore, "Yes - Restore cache"))
+            if (confirm_selection(confirm_restore, "Igen - cache vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore cache
                 nandroid_restore(file, 0, 0, 0, 1, 0, 0);
             break;
         case 4:
-            if (confirm_selection(confirm_restore, "Yes - Restore sd-ext"))
+            if (confirm_selection(confirm_restore, "Igen - sd-ext vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore sd-ext
                 nandroid_restore(file, 0, 0, 0, 0, 1, 0);
             break;
         case 5:
-            if (confirm_selection(confirm_restore, "Yes - Restore wimax"))
+            if (confirm_selection(confirm_restore, "Igen - wimax vissza\xe1ll\xedt\xe1sa ")) //Yes - Restore wimax
                 nandroid_restore(file, 0, 0, 0, 0, 0, 1);
             break;
     }
 }
 
 static void choose_default_backup_format() {
-    static char* headers[] = {  "Default Backup Format",
+    static char* headers[] = {  "Ment\xe9s alap\xe9rtelmezett form\xe1tuma", //Default Backup Format
                                 "",
                                 NULL
     };
 
     char **list;
-    char* list_tar_default[] = { "tar (default)",
+    char* list_tar_default[] = { "tar (alapértelmezett)", //tar (default)
         "dup",
         NULL
     };
     char* list_dup_default[] = { "tar",
-        "dup (default)",
+        "dup (alapértelmezett)", //dup (default)
         NULL
     };
 
@@ -1469,26 +1469,26 @@ static void choose_default_backup_format() {
         case 0:
             backupfmt = 0;
             write_string_to_file(NANDROID_BACKUP_FORMAT_FILE, "tar");
-            ui_print("Default backup format set to tar.\n");
+            ui_print("alap\xe9rtelmezett form\xe1tum: tar\n"); //Default backup format set to tar.
             break;
         case 1:
             backupfmt = 1;
             write_string_to_file(NANDROID_BACKUP_FORMAT_FILE, "dup");
-            ui_print("Default backup format set to dedupe.\n");
+            ui_print("alap\xe9rtelmezett form\xe1tum: dedupe.\n"); //Default backup format set to dedupe.
             break;
     }
 }
 
 void show_nandroid_advanced_menu()
 {
-    static char* headers[] = {  "Haladó mentés és",  //Advanced Backup and Restore
-                                "visszaállítás",
+    static char* headers[] = {  "Halad\xf3 ment\xe9s \xe9s",  //Advanced Backup and Restore
+                                "vissza\xe1ll\xedt\xe1s",
                                 "",
                                 NULL
     };
 
-    char* list[] = {"Haladó mentés", //Advanced Backup
-                            "Haladó visszaállítás", //Advanced Restore
+    char* list[] = {"Halad\xf3 ment\xe9s", //Advanced Backup
+                            "Halad\xf3 vissza\xe1ll\xedt\xe1s", //Advanced Restore
                             NULL,
                             NULL,
                             NULL
@@ -1498,14 +1498,14 @@ void show_nandroid_advanced_menu()
     switch(EXTRA_SDCARD) {
 			case EMMC: 
 				 other_sd = "/emmc";
-                                 list[2] = "Haladó mentés belső SD-re"; //Advanced backup to internal_sd
-                                 list[3] = "Haladó visszaállítás belső SD-ről"; //Advanced restore from internal_sd
+                                 list[2] = "Halad\xf3 ment\xe9s bels\xf5 SD-re"; //Advanced backup to internal_sd
+                                 list[3] = "Halad\xf3 vissza\xe1ll\xedt\xe1s bels\xf5 SD-r\xf5l"; //Advanced restore from internal_sd
 				break;
 
 			case EXTERNALSD:
 				 other_sd = "/external_sd";
-                                 list[2] = "Haladó mentés külső SD-re"; //Advanced backup to external_sd
-                                 list[3] = "Haladó visszaállítás külső SD-ről"; //Advanced restore from external_sd
+                                 list[2] = "Halad\xf3 ment\xe9s k\xfcls\xf5 SD-re"; //Advanced backup to external_sd
+                                 list[3] = "Halad\xf3 vissza\xe1ll\xedt\xe1s k\xfcls\xf5 SD-r\xf5l"; //Advanced restore from external_sd
 				break;
 		}
     
@@ -1554,17 +1554,17 @@ void show_nandroid_advanced_menu()
 
 void show_nandroid_menu()
 {
-    static char* headers[] = {  "Mentés és visszaállítás", //Backup and Restore
+    static char* headers[] = {  "Ment\xe9s \xe9s vissza\xe1ll\xedt\xe1s", //Backup and Restore
                                 "",
                                 NULL
     };
 
-    char* list[] = { "Mentés", //Backup
-                            "Visszaállítás", //Restore
-                            "Mentések törlése", //Delete Old Backups
-                            "Haladó mentés/visszaállítás", //Advanced Backup Restore
-                            "Alapértelmezett formátum", //Default backup format
-                            "MD5 ellenőrzése", //Toggle MD5 Verification
+    char* list[] = { "Ment\xe9s", //Backup
+                            "Vissza\xe1ll\xedt\xe1s", //Restore
+                            "Ment\xe9sek t\xf6rl\xe9se", //Delete Old Backups
+                            "Halad\xf3 ment\xe9s/vissza\xe1ll\xedt\xe1s", //Advanced Backup Restore
+                            "Alap\xe9rtelmezett form\xe1tum", //Default backup format
+                            "MD5 ellen\xf5rz\xe9se", //Toggle MD5 Verification
                             NULL,
                             NULL,
                             NULL,
@@ -1580,15 +1580,15 @@ void show_nandroid_menu()
     char *other_sd = NULL;
   //  if(EXTRA_SDCARD == EMMC) 
     if (volume_for_path("/emmc") != NULL) {
-		list[7] = "Mentés a belső SD-re"; //Backup to internal sdcard
-		list[8] = "Visszaállítás belső SD-ről"; //Restore from internal sdcard
-		list[9] = "Törlés belső SD-ről"; //Delete from internal sdcard
+		list[7] = "Ment\xe9s a bels\xf5 SD-re"; //Backup to internal sdcard
+		list[8] = "Vissza\xe1ll\xedt\xe1s bels\xf5 SD-r\xf5l"; //Restore from internal sdcard
+		list[9] = "T\xf6rl\xe9s bels\xf5 SD-r\xf5l"; //Delete from internal sdcard
 		other_sd = "/emmc";
 		EXTRA_SDCARD = EMMC;
 	} else if (volume_for_path("/external_sd") != NULL) {
-		list[7] = "Mentés a külső SD-re"; //Backup to external sdcard
-		list[8] = "Visszaállítás külső SD-ről"; //Restore from external sdcard
-		list[9] = "Törlés külső SD-ről"; //Delete from external sdcard
+		list[7] = "Ment\xe9s a k\xfcls\xf5 SD-re"; //Backup to external sdcard
+		list[8] = "Vissza\xe1ll\xedt\xe1s k\xfcls\xf5 SD-r\xf5l"; //Restore from external sdcard
+		list[9] = "T\xf6rl\xe9s k\xfcls\xf5 SD-r\xf5l"; //Delete from external sdcard
 		other_sd = "/external_sd";
 		EXTRA_SDCARD = EXTERNALSD;
     }
@@ -1662,9 +1662,9 @@ void show_nandroid_menu()
 }
 
 static void partition_sdcard(const char* volume) {
-  ui_print("PARTÍCIÓ: %s\n", volume);
+  ui_print("PART\xcdCI\xd3: %s\n", volume);
     if (!can_partition(volume)) {
-        ui_print("Can't partition device: %s\n", volume);
+        ui_print("Eszk\xf6z nem partícion\xe1lhat\xf3: %s\n", volume); //Can't partition device:
         return;
     }
 
@@ -1916,19 +1916,19 @@ void show_carliv_menu()
 
 void show_advanced_menu()
 {
-    static char* headers[] = {  "Haladó menü", //Advanced Menu
+    static char* headers[] = {  "Halad\xf3 men\xfc", //Advanced Menu
                                 "",
                                 NULL
     };
 
-    static char* list[] = { "hibajelentés", //report error
-                            "billentyűteszt", //key test
+    static char* list[] = { "hibajelent\xe9s", //report error
+                            "billenty\xfbteszt", //key test
                             "log", //show log
-                            "Érintésvezérlés", //Toggle touch control
-                            "Segítség az érintésvezérléshez", //Instructions for touch control                           
-                            "SD kártya partícionálása", //partition sdcard
-                            "belső SD partícionálása", //partition internal sdcard
-                            "külső SD partícionálása", //partition external sdcard
+                            "\xc9rint\xe9svez\xe9rl\xe9s", //Toggle touch control
+                            "Seg\xedts\xe9g az \xe9rint\xe9svez\xe9rl\xe9shez", //Instructions for touch control                           
+                            "SD k\xe1rtya part\xed\x63ion\xe1l\xe1sa", //partition sdcard
+                            "bels\xf5 SD part\xed\x63ion\xe1l\xe1sa", //partition internal sdcard
+                            "k\xfcls\xf5 SD part\xed\x63ion\xe1l\xe1sa", //partition external sdcard
                             NULL
     };
     
@@ -2206,7 +2206,7 @@ int verify_root_and_recovery() {
             if ((st.st_mode & (S_ISUID | S_ISGID)) != (S_ISUID | S_ISGID)) {
                 ui_show_text(1);
                 ret = 1;
-		ui_print("Root access possibly lost.\n"); //kiszedve külön sorba, mert túl hosszú, kilép a menüből. Ugyanez lentebb is
+		ui_print("Root access possibly lost.\n"); //kiszedve k\xfcl\xf6n sorba, mert t\xfal hossz\xfa, kil\xe9p a men\xfcb\xf5l. Ugyanez lentebb is
                 if (confirm_selection("Fix?", "Yes - Fix root (/system/bin/su)")) {
                     __system("chmod 6755 /system/bin/su");
                 }
@@ -2220,7 +2220,7 @@ int verify_root_and_recovery() {
             if ((st.st_mode & (S_ISUID | S_ISGID)) != (S_ISUID | S_ISGID)) {
                 ui_show_text(1);
                 ret = 1;
-		ui_print("Root access possibly lost.\n"); //kiszedve külön sorba, mert túl hosszú, kilép a menüből. Ugyanez lentebb is
+		ui_print("Root access possibly lost.\n"); //kiszedve k\xfcl\xf6n sorba, mert t\xfal hossz\xfa, kil\xe9p a men\xfcb\xf5l. Ugyanez lentebb is
                 if (confirm_selection("Fix?", "Yes - Fix root (/system/xbin/su)")) {
                     __system("chmod 6755 /system/xbin/su");
                 }
